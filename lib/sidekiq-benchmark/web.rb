@@ -1,4 +1,3 @@
-require 'sinatra/assetpack'
 require 'chartkick'
 
 module Sidekiq
@@ -6,16 +5,6 @@ module Sidekiq
     module Web
       def self.registered(app)
         web_dir = File.expand_path("../../../web", __FILE__)
-        js_dir = File.join(web_dir, "assets", "javascripts")
-
-        app.helpers Chartkick::Helper
-        app.register Sinatra::AssetPack
-
-        app.assets {
-          serve '/js', from: js_dir
-
-          js 'chartkick', ['/js/chartkick.js']
-        }
 
         app.get "/benchmarks" do
           @charts = {}
